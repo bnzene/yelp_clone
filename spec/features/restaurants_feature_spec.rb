@@ -1,5 +1,11 @@
 require 'rails_helper'
 
+describe Restaurant, type: :model do
+  it do
+    should belong_to(:user)
+  end
+end
+
 feature 'restaurants' do
   context 'no restaurants have been added' do
     scenario 'should display a prompt to add a restaurant' do
@@ -119,5 +125,4 @@ feature 'restaurants' do
       end
     end
   end
-
 end
