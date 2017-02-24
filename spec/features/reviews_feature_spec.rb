@@ -2,9 +2,8 @@ require 'rails_helper'
 
   feature 'reviewing' do
     scenario 'allows users to leave a review using a form' do
-      create_default_user
-      save_and_open_page
-      sign_in_default_user
+      create_default_user_1
+      log_in_default_user_1
       create_default_restaurant
       visit '/restaurants'
       click_link 'Review KFC'

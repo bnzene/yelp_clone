@@ -3,13 +3,12 @@ require 'rails_helper'
 feature 'restaurants' do
   context 'user not logged in' do
     before do
-      create_default_user
+      create_default_user_1
     end
 
     scenario 'User cannot create a restaurant' do
       visit '/'
       click_link 'Add a restaurant'
-      save_and_open_page
       expect(page).to have_content('You need to sign in or sign up before continuing')
     end
 
@@ -25,28 +24,22 @@ feature 'restaurants' do
       create_default_restaurant
       visit '/'
       save_and_open_page
-      click_link 'Edit KFC'
-      expect(page).to have_content('You need to sign in or sign up before continuing')
+      expect(page).not_to have_content('Edit KFC')
     end
 
     scenario 'User cannot delete a restaurant' do
       create_default_restaurant
       visit '/'
-      click_link 'Delete KFC'
-      expect(page).to have_content('You need to sign in or sign up before continuing')
+      expect(page).not_to have_content('Delete KFC')
     end
   end
 
   context 'user logged in' do
     before do
       visit('/')
-      create_default_user
+      create_default_user_1
       create_default_restaurant
-      click_link('Sign up')
-      fill_in('Email', with: 'test@example.com')
-      fill_in('Password', with: 'testtest')
-      fill_in('Password confirmation', with: 'testtest')
-      click_button('Sign up')
+      log_in_default_user_1
     end
 
     context 'restaurants have been added' do
@@ -93,6 +86,7 @@ feature 'restaurants' do
     context 'editing restaurants' do
       scenario 'let a user edit a restaurant' do
         visit '/restaurants'
+        save_and_open_page
         click_link 'Edit KFC'
         fill_in 'Name', with: 'Kentucky Fried Chicken'
         fill_in 'Description', with: 'Deep fried goodness'
@@ -102,14 +96,31 @@ feature 'restaurants' do
         expect(page).to have_content 'Deep fried goodness'
         expect(current_path).to eq "/restaurants/#{@restaurant.id}"
       end
+
+      scenario 'User cannot edit a restaurant they do not own' do
+        visit '/restaurants'
+        click_link('Sign out')
+        sign_up_default_user_2
+        save_and_open_page
+        expect(page).not_to have_content('Edit KFC')
+      end
     end
 
     context 'deleting restaurants' do
       scenario 'removes a restaurant when a user clicks a delete link' do
         visit '/restaurants'
+        save_and_open_page
         click_link 'Delete KFC'
         expect(page).not_to have_content 'KFC'
         expect(page).to have_content 'Restaurant deleted successfully'
+      end
+
+      scenario 'User cannot delete a restaurant they do not own' do
+        visit '/restaurants'
+        click_link('Sign out')
+        sign_up_default_user_2
+        save_and_open_page
+        expect(page).not_to have_content('Delete KFC')
       end
     end
   end
