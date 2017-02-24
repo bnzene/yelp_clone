@@ -13,6 +13,7 @@ describe Restaurant, type: :model do
     restaurant = Restaurant.create(name: "Moe's Tavern", description: 'Ugh', user: @user)
     expect(restaurant).to have(1).error_on(:name)
   end
+
 end
 
 describe 'reviews' do

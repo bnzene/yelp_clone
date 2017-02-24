@@ -7,7 +7,7 @@ def create_default_restaurant
 end
 
 def log_in_default_user_1
-  visit '/restaurants'
+  visit '/'
   click_link('Sign in')
   fill_in('Email', with: 'user1@example.com')
   fill_in('Password', with: 'abc123')
@@ -15,7 +15,7 @@ def log_in_default_user_1
 end
 
 def sign_up_default_user_2
-  visit '/restaurants'
+  visit '/'
   click_link('Sign up')
   fill_in('Email', with: 'user2@example.com')
   fill_in('Password', with: 'testtest')
@@ -24,7 +24,7 @@ def sign_up_default_user_2
 end
 
 def log_in_default_user_2
-  visit '/restaurants'
+  visit '/'
   click_link('Sign in')
   fill_in('Email', with: 'user2@example.com')
   fill_in('Password', with: 'testtest')

@@ -81,7 +81,16 @@ feature 'restaurants' do
         expect(page).to have_content 'Deep fried goodness'
         expect(current_path).to eq "/restaurants/#{@restaurant.id}"
       end
+
+      it 'restaurant view displays attached image' do
+        click_link 'Add a restaurant'
+        fill_in 'Name', with: 'Anonymous'
+        attach_file("restaurant_image", "spec/surfing.jpg")
+        click_button 'Create Restaurant'
+        expect(page).to have_css("img[src*='surfing']")
+      end
     end
+
 
     context 'editing restaurants' do
       scenario 'let a user edit a restaurant' do
