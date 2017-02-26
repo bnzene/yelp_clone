@@ -1,6 +1,7 @@
 <% if @restaurants.any? %>
   <% @restaurants.each do |restaurant| %>
     <h2><%= link_to restaurant.name, restaurant_path(restaurant) %></h2>
+    <h4> <%= restaurant.description %> </h4>
     <%= restaurant.reviews.first.thoughts if restaurant.reviews.length > 0 %>
       <% if restaurant.user == current_user %>
         <%= link_to "Edit #{restaurant.name}", edit_restaurant_path(restaurant) %>
