@@ -29,11 +29,13 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'devise'
 
+gem 'omniauth-facebook'
+
 gem 'shoulda'
 
 gem 'paperclip'
 
-gem 'aws-sdk', '< 2.0'
+gem 'aws-sdk'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 3.0'
